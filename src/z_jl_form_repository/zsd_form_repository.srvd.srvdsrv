@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of form repository app'
+define service ZSD_FORM_REPOSITORY {
+  expose ZC_FORM;
+}

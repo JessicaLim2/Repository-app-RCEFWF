@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of workflow repository app'
+define service ZSD_WORKFLOW_REPOSITORY {
+  expose ZC_WORKFLOW;
+}

@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of interface repository'
+define service ZSD_INTERFACE_REPOSITORY {
+  expose ZC_INTERFACE;
+}

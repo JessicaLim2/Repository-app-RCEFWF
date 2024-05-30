@@ -1,0 +1,79 @@
+managed;// implementation in class zbp_i_interface unique;
+//strict ( 1 );
+with draft;
+
+define behavior for ZI_INTERFACE //alias <alias_name>
+implementation in class zbp_i_interface unique
+persistent table zdt_interface
+draft table zdt_interf_draft
+lock master total etag locallastchangedat
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  field ( readonly, numbering:managed ) uuid;
+ // field ( readonly:update ) tech_area;
+
+  //MUST HV WHN USE VIRTUAL ELEMENT
+//  field ( readonly ) UICT_PIPO_HIDE;
+//  field ( readonly ) UICT_CPI_HIDE;
+//  field ( readonly ) UICT_RFC_HIDE;
+
+  //not needed cz we dw to set subarea as non editable since able to hide accordingly from UI5 but required for tech_area for default value
+  field ( features : instance ) tech_area;
+
+//RMB!  association _InterfaceItem { create; }
+
+  action draftToActive result [1] entity ZI_INTERFACE;
+
+  //not needed in this proj cz ideally we should auto remove non related section instead upon CHANGE not SAVE
+  determination hideTechSubarea on modify { field tech_subarea; }
+
+  determination setDefaultTechArea on save { field tech_subarea; create;  }//create; }
+  //determination setDefaultTechArea on modify { create;  }// }field tech_subarea;
+
+  validation validateTechSubarea on save { field tech_subarea; create; update; }
+  validation validateClientProj on save { field client_prj; create; update; }
+  validation validateProject on save { field project; create; update; }
+  validation validateIntDomain on save { field integration_dom; create; update; }
+  validation validateIntStyle on save { field integration_sty; create; update; }
+  validation validateIntPattern on save { field integration_pat; create; update; }
+  validation validateCommunication on save { field communication; create; update; }
+  validation validateTechnology on save { field Technology; create; update; }
+  validation validateSenderFormat on save { field sender_format; create; update; }
+  validation validateReceiverFormat on save { field receiver_format; create; update; }
+  validation validateMapping on save { field mapping; create; update; }
+  validation validateSenderSec on save { field sender_sec; create; update; }
+  validation validateReceiverSec on save { field receiver_sec; create; update; }
+  validation validateSenderType on save { field sender_type; create; update; }
+  validation validateReceiverType on save { field receiver_type; create; update; }
+  validation validateModuleName on save { field module_name; create; update; }
+  validation validateDeveloper on save { field developer; create; update; }
+  validation validateFunctional on save { field functional; create; update; }
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+}
+
+//define behavior for ZI_INTERFACE_ITEM alias InterfaceItem
+//implementation in class zbp_i_interface_item unique
+//persistent table zdt_interf_item
+//draft table  zdt_inter_item_d
+//lock dependent by _Interface
+//authorization dependent by _Interface
+//etag master LocalLastChangedAt
+//{
+//  association _Interface { with draft; }
+
+//  update;
+//  delete;
+
+//  field ( numbering : managed, readonly )  interf_item_uuid;
+//  field ( readonly ) uuid;
+//  field ( readonly ) LocalLastChangedAt;
+
+
+//}

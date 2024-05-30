@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of conversion repository app'
+define service ZSD_CONVERSION_REPOSITORY {
+  expose ZC_CONVERSION;
+}

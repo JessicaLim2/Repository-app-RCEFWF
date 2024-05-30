@@ -1,0 +1,46 @@
+managed;// implementation in class zbp_i_fiori unique;
+//strict ( 1 );
+with draft;
+
+define behavior for ZI_CONVERSION //alias <alias_name>
+implementation in class zbp_i_conversion unique//zbp_i_fiori unique//cannot reuse behavior implementation coz different entity
+persistent table zdt_conversion
+draft table zdt_conver_draft
+lock master total etag locallastchangedat
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  field ( readonly, numbering:managed ) uuid;
+
+  //MUST HV WHN USE VIRTUAL ELEMENT
+//  field ( readonly ) UICT_PIPO_HIDE;
+//  field ( readonly ) UICT_CPI_HIDE;
+//  field ( readonly ) UICT_RFC_HIDE;
+
+  //not needed cz we dw to set subarea as non editable since able to hide accordingly from UI5 but required for tech_area for default value
+  field ( features : instance ) tech_area;
+
+//RMB!  association _InterfaceItem { create; }
+
+  action draftToActive result [1] entity ZI_CONVERSION;
+
+  //not needed in this proj cz ideally we should auto remove non related section instead upon CHANGE not SAVE
+ // determination hideTechSubarea on modify { field tech_subarea; }
+
+  determination setDefaultTechArea on save { create; }
+
+  validation validateTechSubarea on save { field tech_subarea; create; update; }
+  validation validateClientProj on save { field client_prj; create; update; }
+  validation validateProject on save { field project; create; update; }
+
+  validation validateModuleName on save { field module_name; create; update; }
+  validation validateDeveloper on save { field developer; create; update; }
+  validation validateFunctional on save { field functional; create; update; }
+
+  create;
+  update;
+  delete;
+
+//  draft action Edit;
+//  draft action Activate;
+}

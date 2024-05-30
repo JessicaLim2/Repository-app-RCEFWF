@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of fiori repository app'
+define service ZSD_FIORI_REPOSITORY {
+  expose ZC_FIORI;
+}

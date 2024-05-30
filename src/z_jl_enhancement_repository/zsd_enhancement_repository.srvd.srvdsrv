@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition of enhancement repository app'
+define service ZSD_ENHANCEMENT_REPOSITORY {
+  expose ZC_ENHANCEMENT;
+}
